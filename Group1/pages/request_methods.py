@@ -8,11 +8,6 @@ import dash_ag_grid as dag
 
 df1 = pd.read_csv('datasets/Dataset 1__Web_Server_Access.csv')
 
-#fig_hist1 = px.histogram(df1, x='timestamp', y='response_time_ms', color='http_method')
-#fig_scat1 = px.scatter(df1, x='timestamp', y='response_time_ms', color='http_method')
-#fig_pie = px.pie(df1, values='http_method', names='status_code', color='status_code', title='Method Status Code')
-#fig_hist1.show()
-
 app = dash.Dash(__name__)
 
 
@@ -43,15 +38,13 @@ layout = html.Div([
 ])
 
 @callback(
- Output('myHist', 'figure'),
-        Output('myScat', 'figure'),
-        Output('urlMethod', 'figure'),
-        #Output('grid', 'data'),
-        Input('methodChoice', 'value'),
+    Output('myHist', 'figure'),
+    Output('myScat', 'figure'),
+    Output('urlMethod', 'figure'),
+    Input('methodChoice', 'value'),
 
 )
 def interactive_graph(value_method):
-    #print(value_method)
     if type(value_method) != str:
        dff = df1[df1['http_method'].isin(value_method)]
     else:
