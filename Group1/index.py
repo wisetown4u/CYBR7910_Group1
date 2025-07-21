@@ -5,7 +5,8 @@ from dash import Dash, html, dcc, Input, Output, register_page
 from app import app
 from app import server
 
-from pages import request_methods, authentication, server_performance, Home, alert, statistics
+from pages import request_methods, authentication, server_performance, Home, alerts_threats, statistics, \
+    alerts_incidents
 
 app = Dash(external_stylesheets=[dbc.themes.SLATE])
 
@@ -43,7 +44,8 @@ accordion = html.Div(
         ),
         dbc.AccordionItem(
     [
-            dbc.Button("View Alerts", href='/alert', color="link"),
+            dbc.Button("Threat Alerts", href='/alerts_threats', color="link"),
+            dbc.Button("Incident Alerts", href="/alerts_incidents", color="link"),
             ],
             title="Alerts",
 
@@ -78,8 +80,10 @@ def display_page(pathname):
         return request_methods.layout
     elif pathname == "/server_performance":
         return server_performance.layout
-    elif pathname == '/alert':
-        return alert.layout
+    elif pathname == '/alerts_threats':
+        return alerts_threats.layout
+    elif pathname == '/alerts_incidents':
+        return alerts_incidents.layout
     elif pathname == '/statistics':
         return statistics.layout
     return html.Div(

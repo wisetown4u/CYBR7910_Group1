@@ -45,8 +45,9 @@ layout= html.Div(
             title="Statistics",
         ),
         dbc.AccordionItem(
-    [
-            dbc.Button("View Alerts", href='/alert', color="link"),
+            [
+                dbc.Button("Threat Alerts", href='/alerts_threats', color="link"),
+                dbc.Button("Incident Alerts", href="/alerts_incidents", color="link"),
             ],
             title="Alerts",
 
