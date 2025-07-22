@@ -1,9 +1,7 @@
-from dash import Dash, dcc, html, Input, Output, dash_table, callback
+from dash import dcc, html, dash_table
 import pandas as pd
 import plotly.express as px
 import dash_bootstrap_components as dbc
-
-app = Dash()
 
 rep_df = pd.read_csv('datasets/Dataset 5__Security_Incident_Reports.csv')
 rep_df.columns = rep_df.columns.str.replace('_', ' ').str.replace('minutes', '(minutes)').str.title()
@@ -24,9 +22,12 @@ det_pie_fig = px.pie(values=det_pie_df.values, names=det_pie_df.index, title="In
 
 layout = html.Div([
     dbc.Button("Home", href="/Home", color="link"),
+    html.H1("Incident Alerts"),
+    html.Br(),
     html.Div([
         html.Div([
-            html.H2("Executive Summary"),
+            html.Br(),
+            html.Br(),
             html.Div([
                 html.H4("Incident Total:"),
                 html.Br(),
@@ -39,24 +40,13 @@ layout = html.Div([
             ], style={'width': '45%', 'display': 'inline-block'}),
         ], style={'width': '25%', 'display': 'inline-block', 'vertical-align': 'top'}),
         dcc.Graph(figure=cat_pie_fig,
-                  style={
-                      'width': '30%',
-                      'display': 'inline-block',
-                  }),
+                  style={'width': '30%', 'display': 'inline-block'}),
         dcc.Graph(figure=res_pie_fig,
-                  style={
-                      'width': '20%',
-                      'display': 'inline-block',
-                  }),
+                  style={'width': '20%', 'display': 'inline-block'}),
         dcc.Graph(figure=det_pie_fig,
-                  style={
-                      'width': '25%',
-                      'display': 'inline-block',
-                  }),
-    ],
-    style={
-        'height':'30vh',
-    }),
+                  style={'width': '25%', 'display': 'inline-block'}),
+    ], style={'height':'30vh'}
+    ),
     dash_table.DataTable(
         id='datatable-interactivity',
         columns=[
@@ -72,21 +62,9 @@ layout = html.Div([
         page_action="native",
         page_current= 0,
         page_size= 50,
-        style_table={
-            'overflowY': 'scroll',
-            'height': '50vh',
-            'cell-align': 'center',
-        },
+        style_table={'overflowY': 'scroll', 'height': '50vh', 'cell-align': 'center'},
     ),
-
-    html.Div(
-        id='datatable-interactivity-container'
-    )
-],
-    style={
-        'width': '80vw',
-        'margin-left': 'auto',
-        'margin-right': 'auto'
-    }
+    html.Div(id='datatable-interactivity-container')
+], style={'width': '80vw', 'margin-left': 'auto', 'margin-right': 'auto'}
 )
 

@@ -1,9 +1,7 @@
-from dash import Dash, dcc, html, Input, Output, dash_table, callback
+from dash import dcc, html, dash_table
 import pandas as pd
 import plotly.express as px
 import dash_bootstrap_components as dbc
-
-app = Dash()
 
 sec_df = pd.read_csv('datasets/Dataset 3__Malware_Threat_Alerts.csv')
 sec_df.columns = sec_df.columns.str.replace('_', ' ').str.title()
@@ -23,37 +21,28 @@ sev_bar_fig.update_layout(showlegend=False)
 
 layout = html.Div([
     dbc.Button("Home", href="/Home", color="link"),
+    html.H1("Threat Alerts"),
+    html.Br(),
     html.Div([
         html.Div([
-            html.H2("Executive Summary"),
+            html.Br(),
+            html.Br(),
+            html.Br(),
             html.Div([
                 html.H4("Alert Count:"),
-                html.Br(),
             ], style={'width': '45%', 'display': 'inline-block'}),
             html.Div([
                 html.H4(sec_row_count, style={'text-align': 'right'}),
-                html.Br(),
             ], style={'width': '45%', 'display': 'inline-block'}),
         ], style={'width': '25%', 'display': 'inline-block', 'vertical-align': 'top'}),
         dcc.Graph(figure=thr_pie_fig,
-                  style={
-                      'width': '25%',
-                      'display': 'inline-block',
-                  }),
+                  style={'width': '25%', 'display': 'inline-block'}),
         dcc.Graph(figure=sev_bar_fig,
-                  style={
-                      'width': '30%',
-                      'display': 'inline-block',
-                  }),
+                  style={'width': '30%', 'display': 'inline-block'}),
         dcc.Graph(figure=rem_pie_fig,
-                  style={
-                      'width': '20%',
-                      'display': 'inline-block',
-                  }),
-    ],
-    style={
-        'height':'30vh',
-    }),
+                  style={'width': '20%', 'display': 'inline-block',}),
+    ], style={'height':'30vh'}
+    ),
     dash_table.DataTable(
         id='alerttable-interactivity',
         columns=[
@@ -69,21 +58,9 @@ layout = html.Div([
         page_action="native",
         page_current= 0,
         page_size= 50,
-        style_table={
-            'overflowY': 'scroll',
-            'height': '50vh',
-            'cell-align': 'center',
-        },
+        style_table={'overflowY': 'scroll', 'height': '50vh', 'cell-align': 'center'},
     ),
-
-    html.Div(
-        id='alerttable-interactivity-container'
-    ),
-],
-    style={
-        'width': '80vw',
-        'margin-left': 'auto',
-        'margin-right': 'auto'
-    }
+    html.Div(id='alerttable-interactivity-container'),
+], style={'width': '80vw', 'margin-left': 'auto', 'margin-right': 'auto'}
 )
 
